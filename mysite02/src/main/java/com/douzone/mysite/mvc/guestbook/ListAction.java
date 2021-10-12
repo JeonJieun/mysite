@@ -1,4 +1,4 @@
-package com.douzone.mysite.mvc.user;
+package com.douzone.mysite.mvc.guestbook;
 
 import java.io.IOException;
 import java.util.List;

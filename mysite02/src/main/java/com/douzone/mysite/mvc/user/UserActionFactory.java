@@ -22,14 +22,6 @@ public class UserActionFactory extends ActionFactory {
 			action = new LoginAction();
 		} else if("logout".equals(actionName)) {
 			action = new LogoutAction();
-		} else if("deleteform".equals(actionName)) {
-			action = new DeleteFormAction();
-		} else if("delete".equals(actionName)) {
-			action = new DeleteAction();
-		} else if("insert".equals(actionName)) {
-			action = new InsertAction();
-		} else if("list".equals(actionName)) {
-			action = new ListAction();
 		} else {
 			action = new MainAction();
 		}
