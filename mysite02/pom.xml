@@ -9,6 +9,14 @@
   <packaging>war</packaging>
   
   <dependencies>
+		<!-- jstl -->
+		<dependency>
+		    <groupId>jstl</groupId>
+		    <artifactId>jstl</artifactId>
+		    <version>1.2</version>
+		</dependency>
+		
+		<!-- mariadb jdbc -->	
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
 			<artifactId>mariadb-java-client</artifactId>
@@ -30,6 +38,5 @@
 				</configuration>
 			</plugin>
 		</plugins>
-	</build>
-  
+	</build>	
 </project>

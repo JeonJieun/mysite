@@ -1,8 +1,5 @@
 package com.douzone.mysite.vo;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class GuestbookVo {
 	private Long no;
 	private String name;
@@ -35,11 +32,6 @@ public class GuestbookVo {
 	}
 	public String getRegDate() {
 		return regDate;
-	}
-	public void setRegDate() {
-		LocalDateTime now = LocalDateTime.now();
-		String regDate = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-		this.regDate = regDate;
 	}
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;

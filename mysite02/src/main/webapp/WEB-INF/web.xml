@@ -10,10 +10,38 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
-  <!-- Servlet -->
+<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param>
+	
+	<!-- Context Load Listener -->
+	<listener>
+		<listener-class>com.douzone.web.listener.ContextLoadListener</listener-class>
+	</listener>
+	
+	<!-- Filters -->
+	<filter>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>com.douzone.web.filter.EncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>		
+	</filter>
+	<filter-mapping>
+		<filter-name>EncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>	
+	</filter-mapping>
+	
+	<!-- Servlets -->
 	<servlet>
 		<servlet-name>MainController</servlet-name>
 		<servlet-class>com.douzone.mysite.controller.MainController</servlet-class>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>/WEB-INF/servlet-context.xml</param-value>
+		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>MainController</servlet-name>
@@ -36,7 +64,15 @@
 	<servlet-mapping>
 		<servlet-name>GuestbookController</servlet-name>
 		<url-pattern>/guestbook</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
 	
-	
+	<servlet>
+		<servlet-name>BoardController</servlet-name>
+		<servlet-class>com.douzone.mysite.controller.BoardController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BoardController</servlet-name>
+		<url-pattern>/board</url-pattern>
+	</servlet-mapping>		
+			
 </web-app>

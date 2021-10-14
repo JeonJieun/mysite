@@ -120,14 +120,13 @@ public class GuestbookDao {
 			conn = getConnection();
 
 			// 3. SQL 준비
-			String sql = " insert" + "   into guestbook" + " values (null, ?, ?, ?, ?)";
+			String sql = " insert" + "   into guestbook" + " values (null, ?, ?, ?, now())";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩(binding)
 			pstmt.setString(1, vo.getName());
 			pstmt.setString(2, vo.getPassword());
 			pstmt.setString(3, vo.getMessage());
-			pstmt.setString(4, vo.getRegDate());
 
 			// 5. SQL 실행
 			int count = pstmt.executeUpdate();

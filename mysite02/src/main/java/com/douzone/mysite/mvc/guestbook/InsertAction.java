@@ -23,12 +23,12 @@ public class InsertAction implements Action {
 		vo.setName(name);
 		vo.setPassword(password);
 		vo.setMessage(message);
-		vo.setRegDate();
 
 		new GuestbookDao().insert(vo);
 		
 		MvcUtil.redirect("/mysite02/guestbook?a=list", request, response);
 
 	}
+
 
 }
