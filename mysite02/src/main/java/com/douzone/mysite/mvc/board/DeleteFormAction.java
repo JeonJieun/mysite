@@ -8,13 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.douzone.mysite.dao.BoardDao;
-import com.douzone.mysite.dao.UserDao;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.UserVo;
 import com.douzone.web.mvc.Action;
 import com.douzone.web.util.MvcUtil;
 
-public class DeleteAction implements Action {
+public class DeleteFormAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,24 +28,14 @@ public class DeleteAction implements Action {
 		//////////////////////////////////////////////////////
 
 		Long no = Long.parseLong(request.getParameter("no"));
-		String password = request.getParameter("password");
-
 		BoardVo vo = new BoardDao().findNo(no);
-		UserVo userVo = new UserDao().findByNo(vo.getUserNo());
-		
-		String state = "비밀번호가 틀렸습니다.";
-		
-		
-		if ( password.equals(userVo.getPassword()) ) {
 
-			if (new BoardDao().deleteUpdate(vo)) {
-				state = "삭제되었습니다.";
-			} else {
-				state = "삭제되지 않았습니다.";
-			}
+		if (authUser.getNo() == vo.getUserNo()) {
+			request.setAttribute("no", no);
+			MvcUtil.forward("board/delete", request, response);
+			return;
 		}
 
-		request.setAttribute("state", state);
 		MvcUtil.forward("board/accessState", request, response);
 
 	}

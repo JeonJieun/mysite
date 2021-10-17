@@ -1,6 +1,5 @@
 package com.douzone.mysite.mvc.guestbook;
 
-import com.douzone.mysite.mvc.main.MainAction;
 import com.douzone.web.mvc.Action;
 import com.douzone.web.mvc.ActionFactory;
 
@@ -16,10 +15,8 @@ public class GuestbookActionFactory extends ActionFactory {
 			action = new DeleteAction();
 		} else if("insert".equals(actionName)) {
 			action = new InsertAction();
-		} else if("list".equals(actionName)) {
-			action = new ListAction();
 		} else {
-			action = new MainAction();
+			action = new ListAction();
 		}
 		return action;
 	}

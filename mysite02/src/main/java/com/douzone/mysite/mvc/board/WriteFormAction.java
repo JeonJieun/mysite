@@ -14,12 +14,8 @@ public class WriteFormAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Long groupNo = Long.parseLong(request.getParameter("groupNo"));
-		
-		System.out.println(groupNo);
-		
 		MvcUtil.forward("board/write", request, response);
-
+		
 	}
 
 }

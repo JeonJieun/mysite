@@ -124,7 +124,7 @@ public class UserDao {
 			conn = getConnection();
 			
 			String sql =
-				" select no, name, email, gender " + 
+				" select no, name, email, gender, password " + 
 			    "   from user " + 
 				"  where no=?";
 			pstmt = conn.prepareStatement(sql);
@@ -140,6 +140,7 @@ public class UserDao {
 				vo.setName(rs.getString(2));
 				vo.setEmail(rs.getString(3));
 				vo.setGender(rs.getString(4));
+				vo.setPassword(rs.getString(5));
 			}
 		} catch (SQLException e) {
 			System.out.println("error:" + e);

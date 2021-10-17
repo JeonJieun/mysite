@@ -1,7 +1,6 @@
 package com.douzone.mysite.mvc.board;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,34 +25,45 @@ public class WriteAction implements Action {
 			return;
 		}
 		//////////////////////////////////////////////////////
-		
+
 		String title = request.getParameter("title");
 		String contents = request.getParameter("content");
-		Long groupNo = Long.parseLong(request.getParameter("groupNo"));
 		
-		BoardDao dao = new BoardDao();
-		List<BoardVo> list = dao.findGroupNo(groupNo);
+		BoardVo vo = new BoardVo();
+		Long groupNo = null;
 		
-		System.out.println(list.size());
+		if (request.getParameter("no") != null) {
+			Long no = Long.parseLong(request.getParameter("no"));
+			BoardVo parentVo = new BoardDao().findNo(no);
+			vo.setGroupNo(vo.getGroupNo());
+			
+			if(parentVo.getOrderNo() != 0) { //group_no = parent_group_no, order_no = parent_order_no, depth = 1;
+				vo.setOrderNo(parentVo.getOrderNo());
+				vo.setDepth(1L);
+				new BoardDao().updateDepth(vo);
+				
+			}
+			else { //group_no = parent_group_no, order_no = 1, depth = 0;
+				vo.setOrderNo(1L);
+				vo.setDepth(0L);
+				new BoardDao().updateOrderNo(vo);
+			}
+		}
 		
-		if(list.size()==0) {
-
-			BoardVo vo = new BoardVo();
-			vo.setTitle(title);
-			vo.setContents(contents);
+		else { //새글 group_no = ?, order_no = 0, depth = 0;
+			groupNo = new BoardDao().findMaxGroupNo();
+			++groupNo;
 			vo.setGroupNo(groupNo);
 			vo.setOrderNo(0L);
 			vo.setDepth(0L);
-			vo.setUserNo(authUser.getNo());
-			vo.setUserName(contents);
-			dao.insert(vo);
 		}
 		
-		
+		vo.setTitle(title);
+		vo.setContents(contents);
+		vo.setUserNo(authUser.getNo());
+		new BoardDao().insert(vo);
 
-		
-		
-		MvcUtil.redirect("/mysite02/board?a=list", request, response);
+		MvcUtil.redirect("/mysite02/board", request, response);
 
 	}
 

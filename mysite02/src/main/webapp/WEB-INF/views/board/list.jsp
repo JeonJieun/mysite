@@ -33,17 +33,51 @@
 					<c:forEach items='${list }' var='vo' varStatus='status'>				
 					<tr>
 						<td>[${count-status.index }]</td>
-						<td style="text-align:left; padding-left:0px"><a href="${pageContext.request.contextPath }/board?a=viewform&groupNo=${vo.groupNo}">${vo.title }</a></td>
+						<td style="text-align:left; padding-left:${10*vo.depth }px">
+							<a href="<c:if test="${vo.title != '삭제된 메세지 입니다.' && vo.contents != '삭제' }">
+							${pageContext.request.contextPath }/board?a=view&no=${vo.no }</c:if>">${vo.title }</a>
+						</td>
 						<td>${vo.userName }</td>
 						<td>${vo.hit }</td>
 						<td>${vo.regDate }</td>
-						<td><a href="${pageContext.request.contextPath }/board?a=delete" class="del">삭제</a></td>
+						<td>
+						<a class="<c:if test="${vo.title == '삭제된 메세지 입니다.' && vo.contents == '삭제' }">del</c:if>"
+						 href="<c:if test="${vo.title != '삭제된 메세지 입니다.' && vo.contents != '삭제' }">
+						 ${pageContext.request.contextPath }/board?a=deleteform&no=${vo.no }</c:if>">
+						 삭제</a>
+						</td>
 					</tr>
 					</c:forEach>
 				</table>
 				
+				
+				<!-- pager 추가 -->
+				<div class="pager">
+					<ul>
+						<li>
+							<a <c:if test="${pageVo.prevPage >= 1 }">href="${pageContext.request.contextPath }/board?pState=prev"</c:if>>
+								◀
+							</a>
+						</li>
+						<c:forEach var="i" begin="${pageVo.startPage }" end="${pageVo.endPage }">
+						<li class="<c:if test="${pageVo.pIndex == i }">selected</c:if>">
+							<a <c:if test="${pageVo.ablepIndex >= i }">href="${pageContext.request.contextPath }/board?pState=${i }"</c:if>>
+								${i }
+							</a>
+						</li>
+						</c:forEach>
+						<li>
+							<a <c:if test="${pageVo.ablepIndex >= pageVo.nextPage }">href="${pageContext.request.contextPath }/board?pState=next"</c:if>>
+								▶
+							</a>
+						</li>
+					</ul>
+				</div>					
+				<!-- pager 추가 -->
+				
+				
 				<div class="bottom">
-					<a href="${pageContext.request.contextPath }/board?a=writeform&groupNo=${count-status.index+1 }" id="new-book">글쓰기</a>
+					<a href="${pageContext.request.contextPath }/board?a=writeform" id="new-book">글쓰기</a>
 				</div>				
 			</div>
 		</div>
