@@ -16,8 +16,7 @@ public class PageVo {
 	public PageVo(Long pIndex){
 		pages = 5L;
 		lines = 10L;
-		count = new BoardDao().countVo();
-		ablepIndex = (long) Math.ceil((double)count/(double)lines);
+		setCount(new BoardDao().countVo());
 		setpIndex(pIndex);
 	}
 
@@ -87,6 +86,7 @@ public class PageVo {
 
 	public void setCount(Long count) {
 		this.count = count;
+		setAblepIndex((long) Math.ceil((double)getCount()/(double)getLines()));
 	}
 
 	public Long getAblepIndex() {

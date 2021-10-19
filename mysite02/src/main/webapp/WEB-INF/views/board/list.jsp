@@ -17,7 +17,6 @@
 		<div id="content">
 			<div id="board">
 				<form id="search_form" action="${pageContext.request.contextPath }/board" method="post">
-					<input type="hidden" name="a" value="search"> 
 					<input type="text" id="kwd" name="kwd" value=""> 
 					<input type="submit" value="찾기">
 				</form>
@@ -39,7 +38,7 @@
 							<td style="text-align:left; padding-left:${20*vo.depth }px">
 								<c:if test="${vo.orderNo != 0}"><img id="profile" src="${pageContext.request.contextPath }/assets/images/reply.png"></c:if> 
 								<c:choose>
-									<c:when test="${vo.title == '삭제된 메세지 입니다.' && vo.contents == '삭제' }"><a>${vo.title }</a></c:when>
+									<c:when test="${vo.title == '[삭제된 메세지 입니다.]' && vo.contents == '[삭제]' }"><a>${vo.title }</a></c:when>
 									<c:otherwise><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }&pState=${pageVo.pIndex }">${vo.title }</a></c:otherwise>
 								</c:choose>
 							</td>
@@ -48,7 +47,7 @@
 							<td>${vo.regDate }</td>
 							<td>
 							<c:choose>
-								<c:when test="${vo.title == '삭제된 메세지 입니다.' && vo.contents == '삭제' }"><a class="del">삭제</a></c:when>
+								<c:when test="${vo.title == '[삭제된 메세지 입니다.]' && vo.contents == '[삭제]' }"><a class="del">삭제</a></c:when>
 								<c:otherwise><a href="${pageContext.request.contextPath }/board?a=deleteform&no=${vo.no }&pState=${pageVo.pIndex }">삭제</a></c:otherwise>
 							</c:choose>
 							</td>

@@ -17,23 +17,33 @@ public class ListAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		PageVo pageVo = null;
-		
-		if(request.getParameter("pState") != null && !request.getParameter("pState").equals("")) {
+
+		PageVo pageVo = new PageVo(1L);
+		//String kwd = request.getParameter("kwd");
+		// = null;
+		//if (kwd != null) {
+		//	 list = new BoardDao().findTitle(pageVo.getpIndex(), pageVo.getLines(), kwd);
+		//}
+		if (isStringLong(request.getParameter("pState"))) {
 			Long pIndex = Long.parseLong(request.getParameter("pState"));
-			pageVo = new PageVo(pIndex);
+			if(pIndex > pageVo.getAblepIndex()) { pageVo.setpIndex(pageVo.getAblepIndex()); }
+			else if(pIndex < 1) { pageVo.setpIndex(1L); }
+			else { pageVo.setpIndex(pIndex); }
 		}
-		
-		else {
-			pageVo = new PageVo(1L);
-		}
-		
 		List<BoardVo> list = new BoardDao().findLimit(pageVo.getpIndex(), pageVo.getLines());
 		request.setAttribute("list", list);
 		request.setAttribute("pageVo", pageVo);
 		MvcUtil.forward("board/list", request, response);
 
+	}
+
+	public boolean isStringLong(String s) {
+		try {
+			Long.parseLong(s);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
 	}
 
 }
