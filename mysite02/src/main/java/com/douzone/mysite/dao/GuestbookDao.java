@@ -23,7 +23,7 @@ public class GuestbookDao {
 			conn = getConnection();
 
 			// 3. SQL 준비
-			String sql = "   select no, name, password, message, reg_date" + 
+			String sql = "   select no, name, password, message, date_format(reg_date, '%Y-%m-%d %H:%i:%s')" + 
 			"     from guestbook" + " order by no desc";
 			pstmt = conn.prepareStatement(sql);
 

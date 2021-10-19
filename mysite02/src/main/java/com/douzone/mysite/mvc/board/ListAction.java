@@ -18,22 +18,18 @@ public class ListAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		PageVo pageVo = new PageVo();
+		PageVo pageVo = null;
 		
-		if(request.getParameter("pState") != null) {
-			if(request.getParameter("pState").equals("prev")) {
-				pageVo.setpIndex(pageVo.getStartPage()-1);
-			}
-			else if(request.getParameter("pState").equals("next")) {
-				pageVo.setpIndex(pageVo.getEndPage()+1);
-			}
-			else {
-				Long pIndex = Long.parseLong(request.getParameter("pState"));
-				pageVo.setpIndex(pIndex);
-			}
+		if(request.getParameter("pState") != null && !request.getParameter("pState").equals("")) {
+			Long pIndex = Long.parseLong(request.getParameter("pState"));
+			pageVo = new PageVo(pIndex);
 		}
 		
-		List<BoardVo> list = new BoardDao().findLimit(pageVo.getpIndex(), 5L);
+		else {
+			pageVo = new PageVo(1L);
+		}
+		
+		List<BoardVo> list = new BoardDao().findLimit(pageVo.getpIndex(), pageVo.getLines());
 		request.setAttribute("list", list);
 		request.setAttribute("pageVo", pageVo);
 		MvcUtil.forward("board/list", request, response);

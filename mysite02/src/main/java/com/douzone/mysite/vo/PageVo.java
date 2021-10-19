@@ -5,19 +5,20 @@ import com.douzone.mysite.dao.BoardDao;
 public class PageVo {
 	private Long pIndex;
 	private Long pages;
+	private Long lines;
 	private Long startPage;
 	private Long endPage;
 	private Long nextPage;
 	private Long prevPage;
+	private Long count;
 	private Long ablepIndex;
 	
-	public PageVo(){
-		pIndex = 1L;
+	public PageVo(Long pIndex){
 		pages = 5L;
-		startPage = pages*(pIndex/pages)+1;
-		endPage = (pIndex/pages+1)*pages;
-		Long count = new BoardDao().countVo();
-		ablepIndex = (long) Math.ceil((double)count/(double)pages);
+		lines = 10L;
+		count = new BoardDao().countVo();
+		ablepIndex = (long) Math.ceil((double)count/(double)lines);
+		setpIndex(pIndex);
 	}
 
 	public Long getpIndex() {
@@ -26,8 +27,8 @@ public class PageVo {
 
 	public void setpIndex(Long pIndex) {
 		this.pIndex = pIndex;
-		setStartPage(pages*(pIndex/pages)+1);
-		setEndPage((pIndex/pages+1)*pages);
+		setStartPage(pages*((pIndex-1)/pages)+1);
+		setEndPage(((pIndex-1)/pages+1)*pages);
 		setPrevPage(getStartPage()-1);
 		setNextPage(getEndPage()+1);
 	}
@@ -38,6 +39,14 @@ public class PageVo {
 
 	public void setPages(Long pages) {
 		this.pages = pages;
+	}
+
+	public Long getLines() {
+		return lines;
+	}
+
+	public void setLines(Long lines) {
+		this.lines = lines;
 	}
 
 	public Long getStartPage() {
@@ -70,6 +79,14 @@ public class PageVo {
 
 	public void setPrevPage(Long prevPage) {
 		this.prevPage = prevPage;
+	}
+
+	public Long getCount() {
+		return count;
+	}
+
+	public void setCount(Long count) {
+		this.count = count;
 	}
 
 	public Long getAblepIndex() {

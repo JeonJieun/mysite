@@ -351,7 +351,7 @@ public class BoardDao {
 		try {
 			conn = getConnection();
 
-			String sql = " update board " + " set title=?, contents=? " + " where no=? ";
+			String sql = " update board " + " set title=?, contents=?, reg_date = now() " + " where no=? ";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, vo.getTitle());
@@ -398,7 +398,7 @@ public class BoardDao {
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩(binding)
-			pstmt.setLong(1, (pIndex - 1) * 5);
+			pstmt.setLong(1, (pIndex - 1) * lines);
 			pstmt.setLong(2, lines);
 
 			// 5. SQL 실행
@@ -498,7 +498,7 @@ public class BoardDao {
 			conn = getConnection();
 
 			String sql = " update board " + " set depth = depth + 1 " + " where group_no=? " + " and order_no =? "
-					+ " and depth != 0 ";
+					+ " and depth > 1 ";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setLong(1, vo.getGroupNo());
@@ -524,5 +524,36 @@ public class BoardDao {
 		}
 
 		return result;
+	}
+
+	public void updateHit(Long no) {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConnection();
+
+			String sql = " update board " + " set hit = hit + 1 " + " where no=? ";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setLong(1, no);
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
 	}
 }

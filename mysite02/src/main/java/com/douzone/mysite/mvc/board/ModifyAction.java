@@ -25,8 +25,10 @@ public class ModifyAction implements Action {
 		vo.setTitle(title);
 		vo.setContents(contents);
 		new BoardDao().update(vo);
+		
+		String pState = request.getParameter("pState");
 
-		MvcUtil.redirect("/mysite02/board?a=view&no=" + vo.getNo(), request, response);
+		MvcUtil.redirect("/mysite02/board?a=view&no=" + vo.getNo()+"&pState=" + pState, request, response);
 	}
 
 }

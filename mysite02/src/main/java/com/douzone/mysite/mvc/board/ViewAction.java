@@ -18,8 +18,9 @@ public class ViewAction implements Action {
 		Long no = Long.parseLong(request.getParameter("no"));
 		BoardVo vo = new BoardDao().findNo(no);
 		
-		request.setAttribute("vo", vo);
+		new BoardDao().updateHit(no);
 		
+		request.setAttribute("vo", vo);
 		MvcUtil.forward("board/view", request, response);
 
 	}

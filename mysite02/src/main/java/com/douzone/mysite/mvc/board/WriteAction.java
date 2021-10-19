@@ -32,25 +32,25 @@ public class WriteAction implements Action {
 		BoardVo vo = new BoardVo();
 		Long groupNo = null;
 		
-		if (request.getParameter("no") != null) {
+		if (request.getParameter("no") != "") {
 			Long no = Long.parseLong(request.getParameter("no"));
 			BoardVo parentVo = new BoardDao().findNo(no);
-			vo.setGroupNo(vo.getGroupNo());
+			vo.setGroupNo(parentVo.getGroupNo());
 			
-			if(parentVo.getOrderNo() != 0) { //group_no = parent_group_no, order_no = parent_order_no, depth = 1;
+			if(parentVo.getOrderNo() != 0) { //group_no = parent_group_no, order_no = parent_order_no, depth = 2; // 대댓글
 				vo.setOrderNo(parentVo.getOrderNo());
-				vo.setDepth(1L);
+				vo.setDepth(2L);
 				new BoardDao().updateDepth(vo);
 				
 			}
-			else { //group_no = parent_group_no, order_no = 1, depth = 0;
+			else { //group_no = parent_group_no, order_no = 1, depth = 1; // 댓글
 				vo.setOrderNo(1L);
-				vo.setDepth(0L);
+				vo.setDepth(1L);
 				new BoardDao().updateOrderNo(vo);
 			}
 		}
 		
-		else { //새글 group_no = ?, order_no = 0, depth = 0;
+		else { //새글 group_no = ?, order_no = 0, depth = 0; // 첫 글쓰기 
 			groupNo = new BoardDao().findMaxGroupNo();
 			++groupNo;
 			vo.setGroupNo(groupNo);
@@ -58,12 +58,15 @@ public class WriteAction implements Action {
 			vo.setDepth(0L);
 		}
 		
-		vo.setTitle(title);
+		if(title.equals("")) { vo.setTitle("[없음]"); }
+		else { vo.setTitle(title); }
 		vo.setContents(contents);
 		vo.setUserNo(authUser.getNo());
 		new BoardDao().insert(vo);
+		
+		String pState = request.getParameter("pState");
 
-		MvcUtil.redirect("/mysite02/board", request, response);
+		MvcUtil.redirect("/mysite02/board?pState=" + pState, request, response);
 
 	}
 
