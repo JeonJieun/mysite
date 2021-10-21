@@ -55,6 +55,51 @@ public class BoardDao {
 		
 		return count;
 	}
+	
+	public Long kwdCountVo(String kwd) {
+		Long count = null;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = getConnection();
+
+			// 3. SQL 준비
+			String sql = " select count(*) from board where title like ? ";
+			pstmt = conn.prepareStatement(sql);
+
+			// 4. 바인딩(binding)
+			pstmt.setString(1, "%" + kwd + "%");
+			// 5. SQL 실행
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				count = rs.getLong(1);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			// clean up
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}	
+		}
+		
+		return count;
+	}
 
 	public List<BoardVo> findLimit(Long pIndex, Long lines) {
 
@@ -255,12 +300,12 @@ public class BoardDao {
 
 			// 3. SQL 준비
 			String sql = " select a.no, a.title, a.contents, a.hit, date_format(a.reg_date, '%Y-%m-%d %H:%i:%s'), a.group_no, a.order_no, a.depth, b.no, b.name"
-					+ " from board a, user b " + " where a.user_no = b.no " + "and a.title like '%?%'"
+					+ " from board a, user b " + " where a.user_no = b.no " + "and a.title like ? "
 					+ " order by a.group_no desc, a.order_no asc, a.depth asc " + " limit ?, ? ";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩(binding)
-			pstmt.setString(1, kwd);
+			pstmt.setString(1, "%" + kwd + "%");
 			pstmt.setLong(2, (pIndex - 1) * lines);
 			pstmt.setLong(3, lines);
 

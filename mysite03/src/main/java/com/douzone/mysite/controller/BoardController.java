@@ -2,9 +2,12 @@ package com.douzone.mysite.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,15 +27,14 @@ public class BoardController {
 	 * if("writeform".equals(actionName)) { action = new WriteFormAction(); } else
 	 * if("write".equals(actionName)) { action = new WriteAction(); } else
 	 * if("deleteform".equals(actionName)) { action = new DeleteFormAction(); } else
-	 * if("delete".equals(actionName)) { action = new DeleteAction(); } else {
-	 * action = new ListAction(); }
+	 * if("delete".equals(actionName)) { action = new DeleteAction(); } 
 	 */
 
 	@Autowired
 	private BoardService boardService;
 
-	@RequestMapping(value = { "", "/{pState}" }, method = RequestMethod.GET)
-	public String list(Model model, @PathVariable(value = "pState", required=false) Long pIndex) {
+	@RequestMapping(value = { "", "/{pIndex}" }, method = RequestMethod.GET)
+	public String list(Model model, @PathVariable(value = "pIndex", required=false) Long pIndex) {
 		PageVo pageVo = new PageVo(1L);
 		
 		if (pIndex != null) {
@@ -51,5 +53,19 @@ public class BoardController {
 		model.addAttribute("pageVo", pageVo);
 		return "board/list";
 	}
+	/*
+	@RequestMapping(value = {"/view/{no}/{pIndex}"}, method = RequestMethod.GET)
+	public String view(Model model, 
+			@PathVariable(value = "no", required=false) Long no, 
+			@PathVariable(value = "pIndex", required=false) Long pIndex,
+			@CookieValue(value = , required = false) Cookie coookie,
+			HttpServletResponse response) {
+		
+		//BoardVo vo = boardService.findNo(no);
+		String COOKIE_NAME = "visitView" + no;
+		boardService.getView(no);
 
+		return null;
+	}
+	 */
 }

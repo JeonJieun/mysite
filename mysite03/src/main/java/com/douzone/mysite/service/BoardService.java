@@ -18,4 +18,9 @@ public class BoardService {
 		return boardRepository.findLimit(pIndex, lines);
 	}
 
+	public void getView(Long no) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

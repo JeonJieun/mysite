@@ -15,7 +15,7 @@ public class PageVo {
 	
 	public PageVo(Long pIndex){
 		pages = 5L;
-		lines = 10L;
+		lines = 2L;
 		setCount(new BoardDao().countVo());
 		setpIndex(pIndex);
 	}

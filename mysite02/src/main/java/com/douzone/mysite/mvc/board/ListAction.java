@@ -19,6 +19,13 @@ public class ListAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		PageVo pageVo = new PageVo(1L);
+		List<BoardVo> list = null;
+		String kwd = request.getParameter("kwd");
+		
+		if(kwd!=null && !kwd.replaceAll(" ", "").equals("")) {
+			pageVo.setCount(new BoardDao().kwdCountVo(kwd));
+			request.setAttribute("kwd", kwd);
+		}
 		
 		if (isStringLong(request.getParameter("pState"))) {
 			Long pIndex = Long.parseLong(request.getParameter("pState"));
@@ -27,7 +34,14 @@ public class ListAction implements Action {
 			else { pageVo.setpIndex(pIndex); }
 		}
 		
-		List<BoardVo> list = new BoardDao().findLimit(pageVo.getpIndex(), pageVo.getLines());
+		if(kwd!=null && !kwd.replaceAll(" ", "").equals("")) {
+			list = new BoardDao().findTitle(pageVo.getpIndex(), pageVo.getLines(), kwd);
+		}
+		
+		else {
+			list = new BoardDao().findLimit(pageVo.getpIndex(), pageVo.getLines());
+		}
+		
 		request.setAttribute("list", list);
 		request.setAttribute("pageVo", pageVo);
 		MvcUtil.forward("board/list", request, response);
