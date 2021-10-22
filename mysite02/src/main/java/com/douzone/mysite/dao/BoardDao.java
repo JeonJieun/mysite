@@ -510,47 +510,11 @@ public class BoardDao {
 			conn = getConnection();
 
 			String sql = " update board " + " set order_no = order_no + 1 " + " where group_no=? "
-					+ " and order_no != 0 ";
+					+ " and order_no >= ? ";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setLong(1, vo.getGroupNo());
-
-			int count = pstmt.executeUpdate();
-
-			result = count == 1;
-
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		} finally {
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return result;
-	}
-
-	public boolean updateDepth(BoardVo vo) {
-		boolean result = false;
-
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		try {
-			conn = getConnection();
-
-			String sql = " update board " + " set depth = depth + 1 " + " where group_no=? " + " and order_no =? "
-					+ " and depth > 1 ";
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setLong(1, vo.getGroupNo());
-			pstmt.setLong(1, vo.getOrderNo());
+			pstmt.setLong(2, vo.getOrderNo());
 
 			int count = pstmt.executeUpdate();
 

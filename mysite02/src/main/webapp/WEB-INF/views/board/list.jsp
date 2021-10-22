@@ -36,7 +36,7 @@
 						<tr>
 							<td>[${c-status.index }]</td>
 							<td style="text-align:left; padding-left:${20*vo.depth }px">
-								<c:if test="${vo.orderNo != 0}"><img id="profile" src="${pageContext.request.contextPath }/assets/images/reply.png"></c:if> 
+								<c:if test="${vo.orderNo != 1}"><img id="profile" src="${pageContext.request.contextPath }/assets/images/reply.png"></c:if> 
 								<c:choose>
 									<c:when test="${vo.title == '[삭제된 메세지 입니다.]' && vo.contents == '[삭제]' }"><a>${vo.title }</a></c:when>
 									<c:otherwise><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }&pState=${pageVo.pIndex }&kwd=${kwd }">${vo.title }</a></c:otherwise>
