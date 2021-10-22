@@ -39,7 +39,7 @@
 								<c:if test="${vo.orderNo != 0}"><img id="profile" src="${pageContext.request.contextPath }/assets/images/reply.png"></c:if> 
 								<c:choose>
 									<c:when test="${vo.title == '[삭제된 메세지 입니다.]' && vo.contents == '[삭제]' }"><a>${vo.title }</a></c:when>
-									<c:otherwise><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }&pState=${pageVo.pIndex }">${vo.title }</a></c:otherwise>
+									<c:otherwise><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }&pState=${pageVo.pIndex }&kwd=${kwd }">${vo.title }</a></c:otherwise>
 								</c:choose>
 							</td>
 							<td>${vo.userName }</td>
@@ -48,7 +48,7 @@
 							<td>
 							<c:choose>
 								<c:when test="${vo.title == '[삭제된 메세지 입니다.]' && vo.contents == '[삭제]' }"><a class="del">삭제</a></c:when>
-								<c:otherwise><a href="${pageContext.request.contextPath }/board?a=deleteform&no=${vo.no }&pState=${pageVo.pIndex }">삭제</a></c:otherwise>
+								<c:otherwise><a href="${pageContext.request.contextPath }/board?a=deleteform&no=${vo.no }&pState=${pageVo.pIndex }&kwd=${kwd }">삭제</a></c:otherwise>
 							</c:choose>
 							</td>
 						</tr>
@@ -83,7 +83,7 @@
 
 
 				<div class="bottom">
-					<a href="${pageContext.request.contextPath }/board?a=writeform&pState=${pageVo.pIndex }" id="new-book">글쓰기</a>
+					<a href="${pageContext.request.contextPath }/board?a=writeform&pState=${pageVo.pIndex }&kwd=${kwd }" id="new-book">글쓰기</a>
 				</div>
 			</div>
 		</div>

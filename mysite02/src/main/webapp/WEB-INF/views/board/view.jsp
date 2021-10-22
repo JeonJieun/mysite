@@ -33,9 +33,9 @@
 					</tr>
 				</table>
 				<div class="bottom">					
-					<a href="${pageContext.request.contextPath }/board?pState=${param.pState }">글목록</a>
-					<a href="${pageContext.request.contextPath }/board?a=modifyform&no=${vo.no }&pState=${param.pState }">글수정</a>
-					<a href="${pageContext.request.contextPath }/board?a=writeform&no=${vo.no }&pState=${param.pState }">답글달기</a>
+					<a href="${pageContext.request.contextPath }/board?pState=${param.pState }&kwd=${param.kwd }">글목록</a>
+					<a href="${pageContext.request.contextPath }/board?a=modifyform&no=${vo.no }&pState=${param.pState }&kwd=${param.kwd }">글수정</a>
+					<a href="${pageContext.request.contextPath }/board?a=writeform&no=${vo.no }&pState=${param.pState }&kwd=${param.kwd }">답글달기</a>
 				</div>
 			</div>
 		</div>

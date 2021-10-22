@@ -18,6 +18,7 @@
 					<input type="hidden" name="a" value="write">
 					<input type='hidden' name="no" value="${param.no }">
 					<input type='hidden' name="pState" value="${param.pState }">
+					<input type='hidden' name="kwd" value="${param.kwd }">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>
@@ -34,7 +35,7 @@
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath }/board?pState=${param.pState }">취소</a>
+						<a href="${pageContext.request.contextPath }/board?pState=${param.pState }&kwd=${param.kwd }">취소</a>
 						<input type="submit" value="등록">
 					</div>
 				</form>				

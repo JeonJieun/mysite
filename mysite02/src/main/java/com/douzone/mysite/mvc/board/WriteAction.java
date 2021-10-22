@@ -1,6 +1,7 @@
 package com.douzone.mysite.mvc.board;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,8 @@ public class WriteAction implements Action {
 			return;
 		}
 		//////////////////////////////////////////////////////
-
+		String pState = request.getParameter("pState");
+		String kwd = request.getParameter("kwd");
 		String title = request.getParameter("title");
 		String contents = request.getParameter("content");
 		
@@ -63,10 +65,8 @@ public class WriteAction implements Action {
 		vo.setContents(contents);
 		vo.setUserNo(authUser.getNo());
 		new BoardDao().insert(vo);
-		
-		String pState = request.getParameter("pState");
 
-		MvcUtil.redirect("/mysite02/board?pState=" + pState, request, response);
+		MvcUtil.redirect("/mysite02/board?pState=" + pState + "&kwd=" + URLEncoder.encode( kwd, "utf-8"), request, response);
 
 	}
 

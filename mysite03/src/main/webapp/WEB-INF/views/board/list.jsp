@@ -16,8 +16,8 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.request.contextPath }/board" method="post">
-					<input type="text" id="kwd" name="kwd" value=""> 
+				<form id="search_form" action="${pageContext.request.contextPath }/board" method="get">
+					<input type="text" id="kwd" name="kwd" value="${kwd }"> 
 					<input type="submit" value="찾기">
 				</form>
 
@@ -38,8 +38,8 @@
 							<td style="text-align:left; padding-left:${20*vo.depth }px">
 								<c:if test="${vo.orderNo != 0}"><img id="profile" src="${pageContext.request.contextPath }/assets/images/reply.png"></c:if> 
 								<c:choose>
-									<c:when test="${vo.title == '삭제된 메세지 입니다.' && vo.contents == '삭제' }"><a>${vo.title }</a></c:when>
-									<c:otherwise><a href="${pageContext.request.contextPath }/board/view/${vo.no }/${pageVo.pIndex }">${vo.title }</a></c:otherwise>
+									<c:when test="${vo.title == '[삭제된 메세지 입니다.]' && vo.contents == '[삭제]' }"><a>${vo.title }</a></c:when>
+									<c:otherwise><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }&pState=${pageVo.pIndex }">${vo.title }</a></c:otherwise>
 								</c:choose>
 							</td>
 							<td>${vo.userName }</td>
@@ -47,8 +47,8 @@
 							<td>${vo.regDate }</td>
 							<td>
 							<c:choose>
-								<c:when test="${vo.title == '삭제된 메세지 입니다.' && vo.contents == '삭제' }"><a class="del">삭제</a></c:when>
-								<c:otherwise><a href="${pageContext.request.contextPath }/board/deleteform/${vo.no }/${pageVo.pIndex }">삭제</a></c:otherwise>
+								<c:when test="${vo.title == '[삭제된 메세지 입니다.]' && vo.contents == '[삭제]' }"><a class="del">삭제</a></c:when>
+								<c:otherwise><a href="${pageContext.request.contextPath }/board?a=deleteform&no=${vo.no }&pState=${pageVo.pIndex }">삭제</a></c:otherwise>
 							</c:choose>
 							</td>
 						</tr>
@@ -60,20 +60,20 @@
 				<div class="pager">
 					<ul>
 						<li><c:choose>
-								<c:when test="${pageVo.prevPage >= 1 }"><a href="${pageContext.request.contextPath }/board/${pageVo.prevPage }">◀</a></c:when>
+								<c:when test="${pageVo.prevPage >= 1 }"><a href="${pageContext.request.contextPath }/board?pState=${pageVo.prevPage }&kwd=${kwd }">◀</a></c:when>
 								<c:otherwise>◀</c:otherwise>
 							</c:choose>
 						</li>
 						<c:forEach var="i" begin="${pageVo.startPage }" end="${pageVo.endPage }">
 							<c:choose>
 								<c:when test="${pageVo.pIndex == i }"><li class="selected">${i }</li></c:when>
-								<c:when test="${pageVo.ablepIndex >= i }"><li><a href="${pageContext.request.contextPath }/board/${i }">${i }</a></li></c:when>
+								<c:when test="${pageVo.ablepIndex >= i }"><li><a href="${pageContext.request.contextPath }/board?pState=${i }&kwd=${kwd }">${i }</a></li></c:when>
 								<c:otherwise><li>${i }</li></c:otherwise>
 							</c:choose>
 						</c:forEach>
 						<li>
 						<c:choose>
-							<c:when test="${pageVo.ablepIndex >= pageVo.nextPage }"><a href="${pageContext.request.contextPath }/board/${pageVo.nextPage }">▶</a></c:when>
+							<c:when test="${pageVo.ablepIndex >= pageVo.nextPage }"><a href="${pageContext.request.contextPath }/board?pState=${pageVo.nextPage }&kwd=${kwd }">▶</a></c:when>
 							<c:otherwise>▶</c:otherwise>
 						</c:choose>
 						</li>
@@ -83,7 +83,7 @@
 
 
 				<div class="bottom">
-					<a href="${pageContext.request.contextPath }/board/writeform/${pageVo.pIndex }" id="new-book">글쓰기</a>
+					<a href="${pageContext.request.contextPath }/board/write/${pageVo.pIndex }" id="new-book">글쓰기</a>
 				</div>
 			</div>
 		</div>
