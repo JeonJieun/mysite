@@ -20,7 +20,7 @@
     					<c:otherwise>${state }</c:otherwise>
 					</c:choose>
 					<br><br>
-					<a href="${pageContext.request.contextPath }/board?pState=${param.pState }">돌아가기</a>
+					<a href="${pageContext.request.contextPath }/board?pIndex=${pIndex }&kwd=${kwd }">돌아가기</a>
 				</p>				
 			</div>
 		</div>

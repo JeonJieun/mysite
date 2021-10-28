@@ -18,9 +18,40 @@ public class BoardService {
 		return boardRepository.findLimit(pIndex, lines);
 	}
 
-	public void getView(Long no) {
-		// TODO Auto-generated method stub
-		
+	public List<BoardVo> getBoard(Long pIndex, Long lines, String kwd) {
+		return boardRepository.findTitle(pIndex, lines, kwd);
+	}
+
+	public Long getCountBoard(String kwd) {
+		return boardRepository.countVo(kwd);
+	}
+
+	public BoardVo getFindNo(Long no) {
+		return boardRepository.findNo(no);
+	}
+
+	public void updateHit(Long no) {
+		boardRepository.updateHit(no);
+	}
+
+	public boolean updateDeleteUpdate(BoardVo vo) {
+		return boardRepository.deleteUpdate(vo);
+	}
+
+	public void updateBoard(BoardVo vo) {
+		boardRepository.update(vo);
+	}
+
+	public void updateOrderNo(BoardVo vo) {
+		boardRepository.updateOrderNo(vo);
+	}
+
+	public Long getFindMaxGroupNo() {
+		return boardRepository.findMaxGroupNo();
+	}
+
+	public void addBoard(BoardVo vo) {
+		boardRepository.insert(vo);
 	}
 
 }

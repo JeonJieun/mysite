@@ -1,7 +1,5 @@
 package com.douzone.mysite.vo;
 
-import com.douzone.mysite.repository.BoardRepository;
-
 public class PageVo {
 	private Long pIndex;
 	private Long pages;
@@ -16,7 +14,6 @@ public class PageVo {
 	public PageVo(Long pIndex){
 		pages = 5L;
 		lines = 10L;
-		setCount(new BoardRepository().countVo());
 		setpIndex(pIndex);
 	}
 

@@ -4,15 +4,15 @@
 	<update id="update" parameterType="uservo">
 		<![CDATA[
 		update user
-		   set name=#{name }, gender=#{gender }
-		 where no=#{no }
+		set name=#{name }, gender=#{gender }
+		where no=#{no }
 		]]>
 	</update>
 	
 	<insert id="insert" parameterType="uservo">
 		<![CDATA[
 		insert
-		  into user 
+		into user 
 		values (null, #{name }, #{email }, #{password }, #{gender }, now(), 'USER')
 		]]>
 	</insert>
@@ -20,17 +20,25 @@
 	<select id="findByEmailAndPassword" parameterType="map" resultType="uservo">
 		<![CDATA[
 		select no, name, role
-		  from user
-		 where email=#{e }
-		   and password=#{p }
+		from user
+		where email=#{e }
+		and password=#{p }
 		]]>
 	</select>
 
 	<select id="findByNo" parameterType="long" resultType="uservo">
 		<![CDATA[
 		select no, name, email, gender 
-		  from user
-		 where no=#{no }
+		from user
+		where no=#{no }
+		]]>
+	</select>
+
+	<select id="findByEmail" parameterType="string" resultType="uservo">
+		<![CDATA[
+		select no, name, email, gender 
+		from user
+		where email=#{email }
 		]]>
 	</select>
 	

@@ -5,33 +5,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Calendar;
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.douzone.mysite.exception.GalleryServiceException;
-import com.douzone.mysite.repository.GalleryRepository;
-import com.douzone.mysite.vo.GalleryVo;
+import com.douzone.mysite.exception.FileUploadException;
 
 @Service
-public class GalleryService {
+public class FileUploadService {
 	private static String SAVE_PATH = "/upload-mysite";
-	private static String URL_BASE = "/gallery/images";	
+	private static String URL_BASE = "/upload/images";	
 	
-	@Autowired
-	private GalleryRepository galleryRepository;
-
-	public List<GalleryVo> getImages() {
-		return galleryRepository.findAll();
-	}
-	
-	public Boolean removeImage(Long no) {
-		return galleryRepository.delete(no);
-	}
-
-	public void saveImage(MultipartFile file, String comments) throws GalleryServiceException {
+	public String restoreImage(MultipartFile file) throws FileUploadException {
 		try {
 			File uploadDirectory = new File(SAVE_PATH);
 			if(!uploadDirectory.exists()) {
@@ -39,7 +24,7 @@ public class GalleryService {
 			}
 			
 			if(file.isEmpty()) {
-				throw new GalleryServiceException("file upload error: image empty");
+				throw new FileUploadException("file upload error: image empty");
 			}
 			
 			String originFilename = file.getOriginalFilename();
@@ -50,14 +35,11 @@ public class GalleryService {
 			OutputStream os = new FileOutputStream(SAVE_PATH + "/" + saveFilename);
 			os.write(data);
 			os.close();
+
+			return URL_BASE + "/" + saveFilename;
 			
-			GalleryVo vo = new GalleryVo();
-			vo.setUrl(URL_BASE + "/" + saveFilename);
-			vo.setComments(comments);
-			
-			galleryRepository.insert(vo);
 		} catch(IOException ex) {
-			throw new GalleryServiceException("file upload error:" + ex);
+			throw new FileUploadException("file upload error:" + ex);
 		}
 	}
 	
@@ -76,5 +58,5 @@ public class GalleryService {
 		filename += ("." + extName);
 		
 		return filename;
-	}
+	}	
 }

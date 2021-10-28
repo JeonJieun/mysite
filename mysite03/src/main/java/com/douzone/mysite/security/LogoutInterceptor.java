@@ -15,10 +15,10 @@ public class LogoutInterceptor extends HandlerInterceptorAdapter {
 		if(session == null) {
 			return false;
 		}
-
+		
 		session.removeAttribute("authUser");
 		session.invalidate();
-
+		
 		response.sendRedirect(request.getContextPath());
 		return false;
 	}
