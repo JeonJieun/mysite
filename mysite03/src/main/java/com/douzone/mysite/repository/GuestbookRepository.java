@@ -22,13 +22,13 @@ public class GuestbookRepository {
 
 	}
 	
+	public List<GuestbookVo> findAll(Long no) {
+		return sqlSession.selectList("guestbook.findAllByNo", no);
+	}
+	
 	public boolean insert(GuestbookVo vo) {
 		int count = sqlSession.insert("guestbook.insert", vo);
 		System.out.println(vo);
 		return count == 1;
-	}
-
-	public GuestbookVo findByNo(Long no) {
-		return sqlSession.selectOne("guestbook.findByNo");
 	}
 }

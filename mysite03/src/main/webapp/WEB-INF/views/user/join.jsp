@@ -10,7 +10,7 @@
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="${pageContext.request.contextPath }/assets/css/user.css" rel="stylesheet" type="text/css">
-<script src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
+<script src="${pageContext.request.contextPath }/assets/js/jquery/jquery-3.6.0.js"></script>
 <script>
 $(function(){
 	$("#btn-check-email").click(function() {

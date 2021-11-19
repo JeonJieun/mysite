@@ -85,8 +85,8 @@
 	outline:none;
 }
 
-#guestbook.delete-form	{ height:200px }
-#guestbook.delete-form form {
+#dialog-delete-form	{ height:200px }
+#dialog-delete-form form {
 	width:300px;
 	padding:10px;
 	border:1px solid #666;
@@ -94,12 +94,15 @@
 	margin:50px auto;
 }
 
-#guestbook.delete-form a	{ display:block; margin:20px auto; width:110px }
-#guestbook.delete-form input[type="password"] {
-	margin-top:5px;
+#dialog-delete-form a	{ display:block; margin:20px auto; width:110px }
+#dialog-delete-form input[type="password"] {
+	padding:5px 0;
 	width:284px;
+	outline: none;
+	border: none;
+	font-size: 1.75em;
 }
-#guestbook.delete-form input[type="submit"] {
+#dialog-delete-form input[type="submit"] {
 	width:296px;
 }		
-#guestbook.delete-message p	{ padding:100px; height:50px; text-align:center }
+#dialog-delete-form .delete-message p	{ padding:100px; height:50px; text-align:center }
